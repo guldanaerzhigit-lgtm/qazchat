@@ -126,11 +126,11 @@ if(localStorage.getItem('qazchat-theme')==='dark'){$('body').classList.add('dark
 
 /* Local demo registration: phone -> verification code -> profile. No SMS/backend yet. */
 let authPhoneValue='', authCountryValue='+7';
-function authStep(step){$('.auth-step').forEach(s=>s.classList.remove('active'));$('#auth'+step+'Step').classList.add('active')}
+function authStep(step){$$('.auth-step').forEach(s=>s.classList.remove('active'));$('#auth'+step+'Step').classList.add('active')}
 function normalizePhone(value){return value.replace(/\D/g,'')}
 function authCountryCode(){return $('#authCountry').value==='+7-RU'?'+7':$('#authCountry').value}
 function showAuth(){const profile=localStorage.getItem('qazchat-profile');if(profile){try{applyProfile(JSON.parse(profile));return}catch(e){localStorage.removeItem('qazchat-profile')}}$('#authScreen').classList.add('visible');document.body.style.overflow='hidden';authStep('Phone')}
-function applyProfile(p){if(!p||!p.firstName)return;const full=[p.firstName,p.lastName].filter(Boolean).join(' ');const handle='@'+(p.username||'user');$('.me-copy strong').forEach(el=>el.textContent=full);$('.me-copy span').forEach(el=>el.textContent=handle);$('.mini-avatar').forEach(el=>{if(el.tagName!=='BUTTON')el.textContent=p.firstName.slice(0,1).toUpperCase()});const profileBtn=$('#profileBtn');if(profileBtn)profileBtn.title=full;$('#authScreen').classList.remove('visible');document.body.style.overflow='';}
+function applyProfile(p){if(!p||!p.firstName)return;const full=[p.firstName,p.lastName].filter(Boolean).join(' ');const handle='@'+(p.username||'user');$$('.me-copy strong').forEach(el=>el.textContent=full);$$('.me-copy span').forEach(el=>el.textContent=handle);$$('.mini-avatar').forEach(el=>{if(el.tagName!=='BUTTON')el.textContent=p.firstName.slice(0,1).toUpperCase()});const profileBtn=$('#profileBtn');if(profileBtn)profileBtn.title=full;$('#authScreen').classList.remove('visible');document.body.style.overflow='';}
 $('#authCountry').addEventListener('change',()=>{authCountryValue=authCountryCode()});
 $('#authPhoneForm').addEventListener('submit',e=>{e.preventDefault();const digits=normalizePhone($('#authPhone').value);if(digits.length<10||digits.length>15){$('#phoneError').textContent='Проверьте номер телефона.';return}authPhoneValue=authCountryCode()+' '+digits;$('#phoneError').textContent='';$('#authCodeDescription').textContent='Введите демонстрационный код для номера '+authPhoneValue+'.';$('#authCode').value='';authStep('Code');setTimeout(()=>$('#authCode').focus(),80)});
 $('#authEditPhone').onclick=()=>authStep('Phone');
